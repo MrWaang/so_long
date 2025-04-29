@@ -1,0 +1,103 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/28 18:47:45 by mah-ming          #+#    #+#             */
+/*   Updated: 2025/04/29 16:21:53 by mah-ming         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+char **parse(char *str)
+{
+   unsigned int size;
+   char **map;
+
+   size = get_size_map(str);
+   map = malloc(sizeof(char *) * (size + 1));
+   if(!map)
+        ft_error("error malloc", 0, 0);
+    map[size] = NULL;
+    open_map(str, map, size);
+    check_map(map, size);
+    return (map);
+}
+
+unsigned int get_size_map(char *str)
+{
+    int fd;
+    unsigned int size;
+    char *line;
+    
+    fd = open(str, O_RDONLY);
+    if (fd == -1)
+        ft_perror();
+    size = 0;
+    while(1)
+    {
+         line = get_next_line(fd);
+         if (!line)
+            break;
+        free(line);
+        size++;
+    }
+    close(fd);
+    return (size);
+}
+
+void open_map(char *str, char **map, unsigned int size)
+{
+    int fd;
+    unsigned int i;
+    char *line;
+
+    i = 0;
+    fd = open(str, O_RDONLY);
+    if (fd == -1)
+    {
+        free(map);
+        ft_perror();
+    }
+    while (i < size)
+    {
+        line = get_next_line(fd);
+        if(!line)
+            break;
+        if(line[ft_strlen(line) - 1] == '\n')
+            line[ft_strlen(line) - 1] = '\0';
+        map[i] = line;
+        i++;
+    }
+    close(fd);
+}
+
+void check_map(char **map, unsigned int size)
+{
+    unsigned int i;
+    unsigned int j;
+    unsigned int size_line;
+
+    i = 0;
+    size_line = (unsigned int)ft_strlen(map[i]);
+    while(map[i])
+    {
+        j = 0;
+        if(size_line != ft_strlen(map[i]))
+            ft_error("error size map", map, 1);
+        while(map[i][j])
+        {
+            if ((i == 0 || i == size - 1) && map[i][j] != '1')
+                ft_error("map struct error", map, 1);
+            if ((j == 0 || j == size_line - 1) && map[i][j] != '1')
+                ft_error("map struct error", map, 1);
+            if(map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'E' && map[i][j] != 'C' && map[i][j] != 'P')
+                ft_error("error map", map, 1);
+            j++;
+        }
+        i++;
+    }
+}
