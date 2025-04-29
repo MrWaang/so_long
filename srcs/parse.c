@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/04/29 16:21:53 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:36:45 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,60 @@ void check_map(char **map, unsigned int size)
             j++;
         }
         i++;
+    }
+}
+
+void ft_check_duplicate(t_data *data)
+{
+    int index_p;
+    int index_e;
+    int index[2];
+
+    data->nbr_item = 0;
+    index[0] = 0;
+    index_p = 0;
+    index_e = 0;
+    while (data->map[index[0]])
+    {
+        index[1] = 0;
+        while (data->map[index[0]][index[1]])
+        {
+            if (data->map[index[0]][index[1]] == 'E')
+                index_e++;
+            else if (data->map[index[0]][index[1]] == 'P')
+                index_p++;
+            else if (data->map[index[0]][index[1]] == 'C')
+                data->nbr_item++;
+            index[1]++;
+        }
+        index[0]++;
+    }
+    if (index_e != 1 || index_p != 1)
+        ft_error("error data map", data->map, 1);
+}
+void ft_find_point(t_data *data)
+{
+    int index[2];
+
+    data->nbr_item = 0;
+    index[0] = 0;
+    while (data->map[index[0]])
+    {
+        index[1] = 0;
+        while (data->map[index[0]][index[1]])
+        {
+            if (data->map[index[0]][index[1]] == 'E')
+            {
+                data->exit[0] = index[1];
+                data->exit[1] = index[0];
+            } 
+            else if (data->map[index[0]][index[1]] == 'P')
+            {
+                data->player[0] = index[1];
+                data->player[1] = index[0];
+            }
+            index[1]++;
+        }
+        index[0]++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:41:36 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/04/29 16:34:51 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:40:27 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@ void ft_perror();
 void ft_error(char *str, char **map, int check);
 void ft_free(char **map);
 unsigned int ft_strlen(char *str);
+void ft_check_duplicate(t_data *data);
+void ft_find_point(t_data *data);
 
 #endif
