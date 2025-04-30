@@ -6,11 +6,12 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:41:46 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/04/29 18:39:49 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:57:53 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 
 int main(int ac, char **av)
 {
@@ -24,7 +25,14 @@ int main(int ac, char **av)
     data.map = parse(av[1]); 
     ft_check_duplicate(&data);
     ft_find_point(&data);
-    printf("player :%d,%d, exit:%d,%d", data.player[0], data.player[1], data.exit[0], data.exit[1]);
-    ft_error("test", data.map, 1);
+    
+    if (ft_flood_fill(data.map, data.player[0], data.player[1]) == 0)
+        ft_error("error flood fill\n", data.map, 1);
+
+    data.mlx = mlx_init();
+    data.mlx_win = mlx_new_window(data.mlx, 1920, 1080, "so_long");
+    mlx_hook(data.mlx_win, CROSS, (1L<<0), close_win, &data);
+    mlx_hook(data.mlx_win, ESC, (1L<<0), close_win, &data);
+    mlx_loop(data.mlx);
     return (0);
 }

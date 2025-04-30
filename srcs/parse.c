@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/04/29 18:36:45 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:05:35 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,20 @@ void ft_find_point(t_data *data)
         }
         index[0]++;
     }
+}
+
+int ft_flood_fill(char **map, int i, int j)
+{
+    if (map[j][i] == '1' || map[j][i] == 'o' || map[j][i] == 'c' || map[j][i] == 'e')
+        return (0);
+    if (map[j][i] == 'C')
+        map[j][i] = 'c';
+    if (map[j][i] == '0')
+        map[j][i] = 'o';
+    if (map[j][i] == 'E')
+    {
+        map[j][i] = 'e';
+        return (ft_flood_fill(map, i, j + 1) +  ft_flood_fill(map, i + 1, j) + ft_flood_fill(map, i, j - 1) + ft_flood_fill(map, i - 1, j) + 1);
+    }
+    return ((ft_flood_fill(map, i, j + 1) +  ft_flood_fill(map, i + 1, j) + ft_flood_fill(map, i, j - 1) + ft_flood_fill(map, i - 1, j)));
 }
