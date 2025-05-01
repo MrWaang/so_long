@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:45:06 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/04/30 18:05:33 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:03:50 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,46 @@ unsigned int ft_strlen(char *str)
         i++;
     return (i);
 }
-int	close_win(t_data *data)
+
+void open_mlx_window(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->mlx_win);
+    data->mlx = mlx_init();
+    data->mlx_win = mlx_new_window(data->mlx, 1920, 1080, "so_long");
+}
+
+int	key_process(int key, t_data *data)
+{
+    if (key == ESC || key == CROSS)
+	    mlx_destroy_window(data->mlx, data->mlx_win);
 	return (0);
 }
-int key_press(t_data *data)
+
+void *load_image(t_data *data, char *path)
 {
-    mlx_key_hook(data->mlx_win, *data);
+    void *img;
+    int i;
+    int j;
+
+    img = mlx_xpm_file_to_image(data->mlx, path, &i, &j);
+    return (img);
+}
+
+void render_texture(t_data *data)
+{
+    data->c_door = load_image(data, "./textutes/c_door.xpm");
+    data->floor = load_image(data, "./textures/floor.xpm");
+    data->item = load_image(data, "./textures/item.xpm");
+    data->o_door = load_image(data, "./textures/o_door.xpm");
+    data->player_door = load_image(data, "./textures/player_door.xpm");
+    data->player_floor = load_image(data, "./textures/player_floor.xpm");
+    data->player_img = load_image(data, "./textures/player.xpm");
+    data->wall = load_image(data, "./textures/wall.xpm");
+}
+
+void render_img(t_data *data)
+{
+    if (parse(data->map) == "E")
+    {
+        
+    }
 }
