@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:45:06 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/01 17:03:50 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:48:12 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned int ft_strlen(char *str)
 {
     unsigned int i;
-    
+
     if (!str || !str[0])
         return (0);
     i = 0;
@@ -59,10 +59,47 @@ void render_texture(t_data *data)
     data->wall = load_image(data, "./textures/wall.xpm");
 }
 
-void render_img(t_data *data)
+void render_player(t_data *data)
 {
-    if (parse(data->map) == "E")
+    if (data->map[data->player[0]][data->player[1]] == 'E')
     {
-        
+        mlx_put_image_to_window(data->mlx, data->mlx_win, data->o_door, data->player[0], data->player[1])
     }
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->player_img, data->player[0], data->player[1])
+}
+
+void *render_pixel(t_data *data, int pixel)
+{
+	void *img;
+
+	img = NULL;
+	if(pixel == '1')
+		img = data->wall;
+	else if (pixel == '0')
+		img = data->floor;
+	else if (pixel == 'E')
+		img = data->c_door;
+	else if (pixel == 'C')
+		img = data->item;
+	return (img);
+}
+
+void render_map(t_data *data)
+{
+	int i;
+	int j;
+	void *img;
+
+	i = 0;
+	while(data->map[i])
+	{
+		j = 0;
+		while(data->map[i][j])
+		{
+			img = render_pixel(data, data->map[i][j])
+			mlx_put_image_to_window(data->mlx, data->mlx_win, img, i, j);
+			j++;
+		}
+		i++;
+	}
 }
