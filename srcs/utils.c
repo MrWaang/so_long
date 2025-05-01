@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:45:06 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/01 17:48:12 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:33:47 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void render_player(t_data *data)
 {
     if (data->map[data->player[0]][data->player[1]] == 'E')
     {
-        mlx_put_image_to_window(data->mlx, data->mlx_win, data->o_door, data->player[0], data->player[1])
+        mlx_put_image_to_window(data->mlx, data->mlx_win, data->o_door, data->player[0], data->player[1]);
     }
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->player_img, data->player[0], data->player[1])
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->player_img, data->player[0], data->player[1]);
 }
 
 void *render_pixel(t_data *data, int pixel)
@@ -86,20 +86,19 @@ void *render_pixel(t_data *data, int pixel)
 
 void render_map(t_data *data)
 {
-	int i;
-	int j;
+	int index[2];
 	void *img;
 
-	i = 0;
-	while(data->map[i])
-	{
-		j = 0;
-		while(data->map[i][j])
-		{
-			img = render_pixel(data, data->map[i][j])
-			mlx_put_image_to_window(data->mlx, data->mlx_win, img, i, j);
-			j++;
-		}
-		i++;
-	}
+	index[0] = 0;
+    while (data->map[index[0]])
+    {
+        index[1] = 0;
+        while (data->map[index[0]][index[1]])
+        {
+            img = render_pixel(data, data->map[index[0]][index[1]]);
+			mlx_put_image_to_window(data->mlx, data->mlx_win, img, index[0], index[1]);
+            index[1]++;
+        }
+        index[0]++;
+    }
 }
