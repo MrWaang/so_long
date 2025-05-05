@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/01 21:31:05 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/06 00:57:18 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char **parse(char *str)
    size = get_size_map(str);
    map = malloc(sizeof(char *) * (size + 1));
    if(!map)
-        ft_error("error malloc", 0, 0);
+        ft_error("error malloc\n", 0, 0);
     map[size] = NULL;
     open_map(str, map, size);
     check_map(map, size);
@@ -87,15 +87,15 @@ void check_map(char **map, unsigned int size)
     {
         j = 0;
         if(size_line != ft_strlen(map[i]))
-            ft_error("error size map", map, 1);
+            ft_error("error size map\n", map, 1);
         while(map[i][j])
         {
             if ((i == 0 || i == size - 1) && map[i][j] != '1')
-                ft_error("map struct error", map, 1);
+                ft_error("map struct error\n", map, 1);
             if ((j == 0 || j == size_line - 1) && map[i][j] != '1')
-                ft_error("map struct error", map, 1);
+                ft_error("map struct error\n", map, 1);
             if(map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'E' && map[i][j] != 'C' && map[i][j] != 'P')
-                ft_error("error map", map, 1);
+                ft_error("error map\n", map, 1);
             j++;
         }
         i++;
@@ -128,7 +128,7 @@ void ft_check_duplicate(t_data *data)
         index[0]++;
     }
     if (index_e != 1 || index_p != 1)
-        ft_error("error data map", data->map, 1);
+        ft_error("error data map\n", data->map, 1);
 }
 void ft_find_point(t_data *data)
 {

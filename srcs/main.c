@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:41:46 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/05 21:47:27 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/06 00:57:16 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int main(int ac, char **av)
     if (ft_flood_fill(data.map, data.player[0], data.player[1]) == 0)
         ft_error("error flood fill\n", data.map, 1);
     open_mlx_window(&data);
-    mlx_hook(data.mlx_win, 2, (1L<<0), key_process, &data);
+    mlx_hook(data.mlx_win, 2, (1L<<0), key_press, &data);
+    mlx_hook(data.mlx_win, CROSS, (1L >> 2), close_prog, &data);
 	render_texture(&data);
     render_map(&data);
     render_player(&data);

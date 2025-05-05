@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 20:08:49 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/04/28 22:00:02 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:02:04 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,9 @@ void ft_free(char **map)
         i++;
     }
     free(map);
+}
+
+int close_prog(void)
+{
+    exit(EXIT_SUCCESS);
 }

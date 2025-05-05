@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:41:36 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/05 21:47:57 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/06 00:57:17 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data
     void *player_floor;
     void *player_img;
     void *wall;
+    void *img[8];
 }              t_data;
 
 char **parse(char *str);
@@ -55,12 +56,14 @@ unsigned int ft_strlen(char *str);
 void ft_check_duplicate(t_data *data);
 void ft_find_point(t_data *data);
 int ft_flood_fill(char **map, int i, int j);
-int	key_process(int key, t_data *data);
 void open_mlx_window(t_data *data);
 void render_texture(t_data *data);
 void *load_image(t_data *data, char *path);
 void render_map(t_data *data);
 void *render_pixel(t_data *data, int pixel);
 void render_player(t_data *data);
+int key_press (int key_code);
+int close_prog(void);
+void player_mouv(t_data *data, int x, int y);
 
 #endif
