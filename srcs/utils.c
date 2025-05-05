@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 21:45:06 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/01 21:33:47 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:49:13 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ unsigned int ft_strlen(char *str)
 
 void open_mlx_window(t_data *data)
 {
-    data->mlx = mlx_init();
-    data->mlx_win = mlx_new_window(data->mlx, 1920, 1080, "so_long");
-}
+    int width;
+	int height;
 
-int	key_process(int key, t_data *data)
-{
-    if (key == ESC || key == CROSS)
-	    mlx_destroy_window(data->mlx, data->mlx_win);
-	return (0);
+	width = ft_strlen(data->map[0]) * 32;
+	height = 0;
+	while (data->map[height])
+		height++;
+	height *= 32;
+
+	data->mlx = mlx_init();
+	data->mlx_win = mlx_new_window(data->mlx, width, height, "so_long");
 }
 
 void *load_image(t_data *data, char *path)
@@ -49,7 +51,7 @@ void *load_image(t_data *data, char *path)
 
 void render_texture(t_data *data)
 {
-    data->c_door = load_image(data, "./textutes/c_door.xpm");
+    data->c_door = load_image(data, "./textures/c_door.xpm");
     data->floor = load_image(data, "./textures/floor.xpm");
     data->item = load_image(data, "./textures/item.xpm");
     data->o_door = load_image(data, "./textures/o_door.xpm");
@@ -59,15 +61,6 @@ void render_texture(t_data *data)
     data->wall = load_image(data, "./textures/wall.xpm");
 }
 
-void render_player(t_data *data)
-{
-    if (data->map[data->player[0]][data->player[1]] == 'E')
-    {
-        mlx_put_image_to_window(data->mlx, data->mlx_win, data->o_door, data->player[0], data->player[1]);
-    }
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->player_img, data->player[0], data->player[1]);
-}
-
 void *render_pixel(t_data *data, int pixel)
 {
 	void *img;
@@ -75,13 +68,15 @@ void *render_pixel(t_data *data, int pixel)
 	img = NULL;
 	if(pixel == '1')
 		img = data->wall;
-	else if (pixel == '0')
+	else if (pixel == 'o')
 		img = data->floor;
-	else if (pixel == 'E')
+	else if (pixel == 'e')
 		img = data->c_door;
-	else if (pixel == 'C')
+	else if (pixel == 'c')
 		img = data->item;
-	return (img);
+    else if (pixel == 'P')
+        img = data->player_img;
+    return (img);
 }
 
 void render_map(t_data *data)
@@ -96,9 +91,18 @@ void render_map(t_data *data)
         while (data->map[index[0]][index[1]])
         {
             img = render_pixel(data, data->map[index[0]][index[1]]);
-			mlx_put_image_to_window(data->mlx, data->mlx_win, img, index[0], index[1]);
+			mlx_put_image_to_window(data->mlx, data->mlx_win, img, index[1] * 32, index[0] * 32);
             index[1]++;
         }
         index[0]++;
     }
+}
+
+void render_player(t_data *data)
+{
+	int x = data->player[0];
+	int y = data->player[1];
+
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->floor, x * 32, y * 32);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->player_img, x * 32, y * 32);
 }

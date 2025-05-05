@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:41:46 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/01 21:33:48 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:47:27 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main(int ac, char **av)
     mlx_hook(data.mlx_win, 2, (1L<<0), key_process, &data);
 	render_texture(&data);
     render_map(&data);
-	render_player(&data);
+    render_player(&data);
     mlx_loop(data.mlx);
     return (0);
 }

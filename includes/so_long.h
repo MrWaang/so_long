@@ -6,7 +6,7 @@
 /*   By: mah-ming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:41:36 by mah-ming          #+#    #+#             */
-/*   Updated: 2025/05/01 21:33:48 by mah-ming         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:47:57 by mah-ming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
     int nbr_item;
     int exit[2];
     size_t score;
+    int move_count;
 
     void *mlx;
     void *mlx_win;
@@ -58,8 +59,8 @@ int	key_process(int key, t_data *data);
 void open_mlx_window(t_data *data);
 void render_texture(t_data *data);
 void *load_image(t_data *data, char *path);
-void render_player(t_data *data);
 void render_map(t_data *data);
 void *render_pixel(t_data *data, int pixel);
+void render_player(t_data *data);
 
 #endif
